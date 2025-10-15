@@ -8,6 +8,30 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/type selection.unity
+    guid: a99cdf8676b5443afa9296c07cbcf34f
+  - enabled: 1
+    path: Assets/Scenes/start page.unity
+    guid: ea71cc71c32114dd38e1437875c2e3c9
+  - enabled: 1
+    path: Assets/Scenes/half a streamer duration.unity
+    guid: f35d79e6d61624f3cb5af46de261b813
+  - enabled: 1
+    path: Assets/Scenes/1 half a parachute.unity
+    guid: dca502e1dd3ea4099bbc6ee127f67191
+  - enabled: 1
+    path: Assets/Scenes/half a altitude.unity
+    guid: 9e853b740135b4ea08f7e6ecaed02801
+  - enabled: 1
+    path: Assets/Scenes/payload.unity
+    guid: cb7d7954ea8f4419ab54a39d133db033
+  - enabled: 1
+    path: Assets/Scenes/egg.unity
+    guid: a87ab543fde5c4139908f64ea1b97285
+  - enabled: 1
+    path: Assets/Scenes/wing.unity
+    guid: af8c9c97a843e4b80b50b096bd127dc0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

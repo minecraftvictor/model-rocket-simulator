@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98e8f8bc39f364f258a754f400930478, type: 3}
-  m_Name: Motor
+  m_Name: Motor 1
   m_EditorClassIdentifier: Assembly-CSharp::Motor
   motorName: 
-  minumumMaxrange: 0
-  maxrange: 0
+  minumumForce: 0
+  maxForce: 0

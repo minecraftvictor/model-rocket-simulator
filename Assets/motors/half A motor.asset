@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: half A motor
   m_EditorClassIdentifier: Assembly-CSharp::Motor
   motorName: 1/2 A
-  minumumMaxrange: 0
-  maxrange: 0
+  minumumForce: 0
+  maxForce: 0

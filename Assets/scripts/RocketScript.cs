@@ -2,17 +2,25 @@ using UnityEngine;
 
 public class RocketScript : MonoBehaviour
 {
-    public int motor; 
+   public Rigidbody rb;
 
-  // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Motor motor; 
+
     void Start()
     {
-        
+      rb = GetComponent<Rigidbody>();
+    }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public void SelectMotor(Motor selectMotor)
+    {
+      motor = selectMotor;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LaunchRocket(float force)
     {
-        
+    rb.AddForce(transform.up * force, ForceMode.Impulse);
     }
+
+
+
 }

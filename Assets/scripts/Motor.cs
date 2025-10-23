@@ -4,6 +4,6 @@ using UnityEngine;
 public class Motor : ScriptableObject
 {
     public string motorName;
-    public int minumumForce; 
-    public int maxForce;
+    public float minumumForce; 
+    public float maxForce;
 }

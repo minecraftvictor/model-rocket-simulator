@@ -659,8 +659,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 72
+  m_CollisionDetection: 2
 --- !u!114 &234533343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,9 +675,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RocketScript
   rb: {fileID: 234533342}
   motor: {fileID: 0}
-  motorForce: 0
+  motorForce: 50
   distance: 0
   startPosition: {x: 0, y: 0, z: 0}
+  launched: 0
+  flipped: 0
+  minUpSpeed: 1
+--- !u!114 &234533344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234533340}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1fe81ed1da55ef42a26026a91ef4600, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  thrustForce: 50
+  spinForce: 5
+  minUpSpeed: 1
+  flipTorque: 30
 --- !u!1 &285171100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,6 +1078,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07b6166f518a94c9aa460354aab80f48, type: 3}
+--- !u!4 &431549280 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6732398567079961185, guid: a107fc3cc54924905ba34c82eb289ff2, type: 3}
+  m_PrefabInstance: {fileID: 1233472639}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &451046940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,6 +1342,7 @@ GameObject:
   - component: {fileID: 638959099}
   - component: {fileID: 638959098}
   - component: {fileID: 638959101}
+  - component: {fileID: 638959102}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1443,6 +1468,21 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &638959102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638959097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 412a1d804602d154e934a009516555a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  rocket: {fileID: 431549280}
+  offset: {x: 0, y: 5, z: -10}
+  followSpeed: 100
 --- !u!1 &1011545545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2129,11 +2169,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a107fc3cc54924905ba34c82eb289ff2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 82.961845
+      value: 5.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a107fc3cc54924905ba34c82eb289ff2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -47.17968
+      value: 59.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a107fc3cc54924905ba34c82eb289ff2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2193,6 +2233,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a107fc3cc54924905ba34c82eb289ff2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 234533343}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a107fc3cc54924905ba34c82eb289ff2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 234533344}
   m_SourcePrefab: {fileID: 100100000, guid: a107fc3cc54924905ba34c82eb289ff2, type: 3}
 --- !u!1 &1244331982
 GameObject:

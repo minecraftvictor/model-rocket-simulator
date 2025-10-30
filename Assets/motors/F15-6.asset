@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98e8f8bc39f364f258a754f400930478, type: 3}
-  m_Name: F18-8
+  m_Name: F15-6
   m_EditorClassIdentifier: Assembly-CSharp::Motor
-  motorName: "F15\u20114"
-  minumumForce: 50
-  maxForce: 60
+  motorName: 
+  minumumForce: 100
+  maxForce: 300

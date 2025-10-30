@@ -5,7 +5,6 @@ public class RocketScript : MonoBehaviour
 {
    public Rigidbody rb;
 
-
     public Motor motor; 
 
     public float motorForce;
@@ -13,31 +12,15 @@ public class RocketScript : MonoBehaviour
     public float distance;
     public Vector3 startPosition;
 
-    public bool launched = false;
-    public bool flipped = false;
-    public float minUpSpeed = 1f;
     void Start()
     {
       rb = GetComponent<Rigidbody>();
-      launched = false;
     }
 
     void Update()
     {
       distance = Vector3.Distance(startPosition, transform.position);
-    }
-
-    void FixedUpdate()
-    {
-        if (launched == true)
-        {
-          if (rb.linearVelocity.y < 0 && flipped == false)
-          {
-            Debug.Log("Falling");
-            rb.AddTorque(transform.right * 55f, ForceMode.Force);
-            flipped = true;
-          }
-        }
+      Debug.Log(distance);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SelectMotor(Motor selectMotor)
@@ -51,7 +34,8 @@ public class RocketScript : MonoBehaviour
     public void LaunchRocket()
     {
       rb.AddForce(transform.up * motorForce, ForceMode.Impulse);
-      launched = true;
     }
+
+
 
 }

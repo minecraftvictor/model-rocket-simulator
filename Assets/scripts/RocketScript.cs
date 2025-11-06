@@ -50,6 +50,7 @@ public class RocketScript : MonoBehaviour
 
     public void LaunchRocket()
     {
+      Debug.Log("Launched");
       rb.AddForce(transform.up * motorForce, ForceMode.Impulse);
       launched = true;
     }

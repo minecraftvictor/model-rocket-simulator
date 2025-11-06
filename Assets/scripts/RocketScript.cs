@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class RocketScript : MonoBehaviour
 {
-   public Rigidbody rb;
-
-
+    public Rigidbody rb;
     public Motor motor; 
 
     public float motorForce;
 
     public float distance;
     public Vector3 startPosition;
+    
+    [SerializeField] ParticleSystem engineVfx;
+
 
     public bool launched = false;
     public bool flipped = false;
@@ -31,14 +32,21 @@ public class RocketScript : MonoBehaviour
     {
         if (launched == true)
         {
+          if(flipped == false)
+            {
+              engineVfx.Play();
+            }
+         
           if (rb.linearVelocity.y < 0 && flipped == false)
           {
             Debug.Log("Falling");
+            engineVfx.Stop();
             rb.AddTorque(transform.right * 55f, ForceMode.Force);
             flipped = true;
           }
         }
     }
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SelectMotor(Motor selectMotor)
     {

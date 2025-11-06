@@ -6,32 +6,26 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Start.unity
+    guid: 774c33ecf21324fe580493e7e63220db
   - enabled: 1
-    path: Assets/Scenes/type selection.unity
-    guid: a99cdf8676b5443afa9296c07cbcf34f
-  - enabled: 1
-    path: Assets/Scenes/start page.unity
-    guid: ea71cc71c32114dd38e1437875c2e3c9
-  - enabled: 1
-    path: Assets/Scenes/half a streamer duration.unity
-    guid: f35d79e6d61624f3cb5af46de261b813
-  - enabled: 1
-    path: Assets/Scenes/1 half a parachute.unity
-    guid: dca502e1dd3ea4099bbc6ee127f67191
+    path: Assets/Scenes/egg B.unity
+    guid: 80826083e11134691bf4b64fb961552e
   - enabled: 1
     path: Assets/Scenes/half a altitude.unity
-    guid: 9e853b740135b4ea08f7e6ecaed02801
+    guid: 4349a3026a5174a95ad67fc8f5147802
   - enabled: 1
-    path: Assets/Scenes/payload.unity
-    guid: cb7d7954ea8f4419ab54a39d133db033
+    path: Assets/Scenes/paper.unity
+    guid: e486cc78847e64e3da58edcd3dcdb8e4
   - enabled: 1
-    path: Assets/Scenes/egg.unity
-    guid: a87ab543fde5c4139908f64ea1b97285
+    path: Assets/Scenes/s2p.unity
+    guid: 89914af66d0e04e4991eba217c7ef9d6
   - enabled: 1
-    path: Assets/Scenes/wing.unity
-    guid: af8c9c97a843e4b80b50b096bd127dc0
+    path: Assets/Scenes/carbon.unity
+    guid: 9212bd6a01aa5423fa89df0315f1b7ce
+  - enabled: 1
+    path: Assets/Scenes/booster rocket.unity
+    guid: b1eb4c294a725410bba875255d1f6a7d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

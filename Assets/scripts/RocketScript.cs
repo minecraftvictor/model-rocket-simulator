@@ -10,6 +10,9 @@ public class RocketScript : MonoBehaviour
 
     public float distance;
     public Vector3 startPosition;
+    public GameObject startObject;
+
+    public float initialDistance;
     
     [SerializeField] ParticleSystem engineVfx;
 
@@ -25,14 +28,17 @@ public class RocketScript : MonoBehaviour
 
     void Update()
     {
-      distance = Vector3.Distance(startPosition, transform.position);
+      if(launched){
+        distance = Vector3.Distance(startPosition, transform.position) - initialDistance;
+      }
+      
     }
 
     void FixedUpdate()
     {
         if (launched == true)
         {
-          if(flipped == false)
+          if(flipped == false && engineVfx != null)
             {
               engineVfx.Play();
             }
@@ -40,7 +46,9 @@ public class RocketScript : MonoBehaviour
           if (rb.linearVelocity.y < 0 && flipped == false)
           {
             Debug.Log("Falling");
-            engineVfx.Stop();
+            if(engineVfx != null){
+              engineVfx.Stop();
+            }
             rb.AddTorque(transform.right * 55f, ForceMode.Force);
             flipped = true;
           }
@@ -58,6 +66,8 @@ public class RocketScript : MonoBehaviour
 
     public void LaunchRocket()
     {
+      startPosition = startObject.transform.position;
+      initialDistance = Vector3.Distance(startPosition, transform.position);
       Debug.Log("Launched");
       rb.AddForce(transform.up * motorForce, ForceMode.Impulse);
       launched = true;

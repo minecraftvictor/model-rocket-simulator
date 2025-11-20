@@ -49,7 +49,7 @@ public class RocketScript : MonoBehaviour
             if(engineVfx != null){
               engineVfx.Stop();
             }
-            rb.AddTorque(transform.right * 55f, ForceMode.Force);
+            rb.AddTorque(transform.right * 65f, ForceMode.Force);
             flipped = true;
           }
         }

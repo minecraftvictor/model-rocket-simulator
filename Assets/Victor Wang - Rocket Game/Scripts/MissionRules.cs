@@ -7,7 +7,8 @@ public class MissionRules : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] Rocket rocket;
-    [SerializeField] Transform landingPad; // optional; or tag collider "LandingPad"
+    [SerializeField] Transform[] landingPads;
+    Transform targetLandingPad;
 
     [Header("Goals")]
     [SerializeField] float targetAltitude = 50f;
@@ -24,6 +25,22 @@ public class MissionRules : MonoBehaviour
 
     public bool reachedAltitude;
     public bool missionOver;
+
+    void Start()
+    {
+        if (landingPads != null && landingPads.Length > 0)
+        {
+            targetLandingPad = landingPads[Random.Range(0, landingPads.Length)];
+            targetLandingPad.gameObject.SetActive(true);
+            foreach (var pad in landingPads)
+            {
+                if (pad != targetLandingPad)
+                {
+                    pad.gameObject.SetActive(false);
+                }
+            }
+        }
+    }
 
     void Update()
     {
@@ -45,7 +62,7 @@ public class MissionRules : MonoBehaviour
     {
         if (!rocket || missionOver || !rocket.hasLaunched) return;
 
-        bool isPad = landingPad && col.collider.transform == landingPad;
+        bool isPad = targetLandingPad && col.collider.transform == targetLandingPad;
         if (!isPad)
         {
             onCrash?.Invoke();

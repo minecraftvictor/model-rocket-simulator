@@ -1,12 +1,14 @@
 // Controls: Space = Thrust, A/D = Yaw, W/S = Pitch, Q/E = Roll, R = Restart
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Rocket : MonoBehaviour
 {
-     [Header("Config")]
+    [Header("Config")]
     [SerializeField] RocketConfig config;
     [SerializeField] float gravity = -9.81f;
 
@@ -17,6 +19,16 @@ public class Rocket : MonoBehaviour
     [Header("Coasting")]
     [SerializeField] float coastingDragMultiplier = 3f; // extra drag when not thrusting
 
+    [Header("Mobile Controls")]
+    public bool useMobileControls = false;
+    [SerializeField] EventTrigger thrustButton;
+    [SerializeField] EventTrigger leftButton;
+    [SerializeField] EventTrigger rightButton;
+    [SerializeField] EventTrigger upButton;
+    [SerializeField] EventTrigger downButton;
+    [SerializeField] EventTrigger rollLeftButton;
+    [SerializeField] EventTrigger rollRightButton;
+
     public bool hasLaunched = false;
 
     Rigidbody body;
@@ -25,6 +37,9 @@ public class Rocket : MonoBehaviour
     // cached inputs
     float yawIn, pitchIn, rollIn;
     bool thrustHeld;
+
+    // mobile held states (computed into the cached inputs each frame)
+    bool yawLeftHeld, yawRightHeld, pitchUpHeld, pitchDownHeld, rollLeftHeld, rollRightHeld;
 
     public float Fuel => fuel;
     public bool OutOfFuel => fuel <= 0f;
@@ -50,7 +65,46 @@ public class Rocket : MonoBehaviour
     void Start()
     {
         Physics.gravity = new Vector3(0f, gravity, 0f);
+        if (useMobileControls) InitMobileControls();
     }
+
+    void InitMobileControls()
+    {
+        // Generic helper wires press/release to a bool setter and guards against missing triggers
+        void WireHold(EventTrigger trigger, UnityAction<bool> setHeld)
+        {
+            if (!trigger || setHeld == null) return;
+
+            void Add(EventTrigger t, EventTriggerType type, UnityAction<BaseEventData> cb)
+            {
+                var entry = new EventTrigger.Entry { eventID = type };
+                entry.callback.AddListener(cb);
+                t.triggers.Add(entry);
+            }
+
+            Add(trigger, EventTriggerType.PointerDown, _ => setHeld(true));
+            Add(trigger, EventTriggerType.PointerUp,   _ => setHeld(false));
+            Add(trigger, EventTriggerType.PointerExit, _ => setHeld(false));     // safety: finger drags off
+            Add(trigger, EventTriggerType.Cancel,      _ => setHeld(false));     // safety: system cancels
+            Add(trigger, EventTriggerType.EndDrag,     _ => setHeld(false));     // safety: end drag
+        }
+
+        // Thrust
+        WireHold(thrustButton, v => thrustHeld = v);
+
+        // Yaw: left = -1, right = +1  (matches keyboard: Q = -1, E = +1)
+        WireHold(leftButton,  v => rollLeftHeld  = v);
+        WireHold(rightButton, v => rollRightHeld = v);
+
+        // Pitch: up = +1, down = -1   (matches keyboard: W = +1, S = -1)
+        WireHold(upButton,    v => pitchUpHeld   = v);
+        WireHold(downButton,  v => pitchDownHeld = v);
+
+        // Roll: left = +1, right = -1 (matches keyboard: A = +1, D = -1)
+        WireHold(rollLeftButton,  v => yawLeftHeld  = v);
+        WireHold(rollRightButton, v => yawRightHeld = v);
+    }
+    // ---------------------------------------------------
 
     void Update()
     {
@@ -60,20 +114,31 @@ public class Rocket : MonoBehaviour
             return;
         }
 
-        // WORLD-SPACE controls (no camera-relative behavior)
-        rollIn =
-            (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) ? -1f : 0f) +
-            (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)  ?  1f : 0f);
+        if (useMobileControls == false)
+        {
+            // WORLD-SPACE controls (no camera-relative behavior)
+            rollIn =
+                (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) ? -1f : 0f) +
+                (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) ?  1f : 0f);
 
-        pitchIn =
-            (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)    ?  1f : 0f) +
-            (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)  ? -1f : 0f);
+            pitchIn =
+                (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)   ?  1f : 0f) +
+                (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ? -1f : 0f);
 
-        yawIn =
-            (Input.GetKey(KeyCode.E) ?  1f : 0f) +
-            (Input.GetKey(KeyCode.Q) ? -1f : 0f);
+            yawIn =
+                (Input.GetKey(KeyCode.E) ?  1f : 0f) +
+                (Input.GetKey(KeyCode.Q) ? -1f : 0f);
 
-        thrustHeld = Input.GetKey(KeyCode.Space);
+            thrustHeld = Input.GetKey(KeyCode.Space);
+        }
+        else
+        {
+            // Compute from mobile held states
+            yawIn   = (yawRightHeld  ? 1f : 0f) - (yawLeftHeld   ? 1f : 0f);
+            pitchIn = (pitchUpHeld   ? 1f : 0f) - (pitchDownHeld ? 1f : 0f);
+            rollIn  = (rollLeftHeld  ? 1f : 0f) + (rollRightHeld ? -1f : 0f);
+        }
+
         if (!hasLaunched && thrustHeld) hasLaunched = true;
 
         UpdateFx(thrustHeld && fuel > 0f);
